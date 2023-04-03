@@ -55,7 +55,7 @@ python setup.py develop --no_cuda_ext
 **Note:** This training script uses 4 GPUs by default. To use any other number of GPUs, modify ```DDT/train.sh``` and ```DDT/Denoising/Options/RealDenoising_DDT.yml``` 
 
 ## Evaluation & Visualization
-Download pretrained model from [Google Drive][https://drive.google.com/file/d/1GGeb_-NcUQkHeJkfoTttUYhk4N1Tqb97/view?usp=sharing] 
+Download pretrained model from [Google Drive](https://drive.google.com/file/d/1GGeb_-NcUQkHeJkfoTttUYhk4N1Tqb97/view?usp=sharing])
 
 ```
 python eval.py
