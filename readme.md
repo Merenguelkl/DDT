@@ -6,7 +6,7 @@ Fudan University, Videt Technology
 
 ---
 
-This repository is the official PyTorch implementation of DDT: Dual-branch Deformable Transformer for image denoising published on ICME 2023.
+This repository is the official PyTorch implementation of DDT: Dual-branch Deformable Transformer for image denoising, ICME 2023.
 
 ## Installation
 
