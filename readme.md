@@ -1,4 +1,12 @@
-# DDT: Dual-branch Deformable Transformer for image denoting
+# DDT: Dual-branch Deformable Transformer for image denoising
+
+Kangliang Liu, Xiangcheng Du, Sijie Liu, Yingbin Zheng, Xingjiao Wu, Cheng jin
+
+Fudan University, Videt Technology
+
+---
+
+This repository is the official PyTorch implementation of DDT: Dual-branch Deformable Transformer for image denoising published on ICME 2023.
 
 ## Installation
 
