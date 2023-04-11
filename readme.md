@@ -73,3 +73,18 @@ python eval.py
 
 The visualized outputs will be gererated in ```DDT/visualization```
 
+## Citation
+If you are interested in this work, please consider citing:
+
+    @inproceedings{DDT,
+        title={DDT: Dual-branch Deformable Transformer for image denoising}, 
+        author={Liu, Kangliang and Du, Xiangcheng and Liu, Sijie and Zheng, Yingbin and Wu, Xingjiao and Jin, Cheng},
+        booktitle={IEEE International Conference on Multimedia and Expo (ICME)},
+        year={2023}
+    }
+
+## Acknowledgment
+This code is based on the [Restormer](https://github.com/swz30/Restormer). Thanks for their awesome work.
+
+## Contact
+Should you have any question or suggestion, please contact klliu21@m.fudan.edu.cn.
