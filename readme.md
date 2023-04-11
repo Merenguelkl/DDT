@@ -87,4 +87,4 @@ If you are interested in this work, please consider citing:
 This code is based on the [Restormer](https://github.com/swz30/Restormer). Thanks for their awesome work.
 
 ## Contact
-Should you have any question or suggestion, please contact klliu21@m.fudan.edu.cn.
+If you have any question or suggestion, please contact klliu21@m.fudan.edu.cn.
