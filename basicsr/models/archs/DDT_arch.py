@@ -59,8 +59,7 @@ class LayerNorm(nn.Module):
         h, w = x.shape[-2:]
         return to_4d(self.body(to_3d(x)), h, w)
 
-##########################################################################
-## Gated-Dconv Feed-Forward Network (GDFN)
+# DFFN
 class FeedForward(nn.Module):
     def __init__(self, dim, ffn_expansion_factor, bias):
         super(FeedForward, self).__init__()
@@ -80,8 +79,7 @@ class FeedForward(nn.Module):
         x = self.project_out(x)
         return x
 
-##########################################################################
-
+# Patch Division
 def block_images_einops(x, patch_size, phase):
     """Image to patches."""
     b, c, height, width = x.shape
@@ -98,6 +96,7 @@ def block_images_einops(x, patch_size, phase):
 
     return x
 
+# Patch Restoration
 def unblock_images_einops(x, grid_size, patch_size, phase):
     """patches to images."""
     if phase == "local":
@@ -110,7 +109,7 @@ def unblock_images_einops(x, grid_size, patch_size, phase):
             gh=grid_size[0], gw=grid_size[1], fh=patch_size[0], fw=patch_size[1])
     return x
 
-## Deformable attention
+## Deformable Attention
 class DeformableAttention(nn.Module):
     def __init__(self, n_heads, n_channel, n_groups, phase, offset_range_factor=1, use_pe=True, dwc_pe=False, fixed_pe=False, q_size=[16, 16], kv_size=[16, 16], activate = "gelu"):
         super(DeformableAttention, self).__init__()
@@ -203,7 +202,7 @@ class DeformableAttention(nn.Module):
 
         q = self.proj_q(x)
 
-        q_off = rearrange(q, 'b (g c) h w -> (b g) c h w', g=self.n_groups, c=self.n_group_channels) # 将q分为多个group
+        q_off = rearrange(q, 'b (g c) h w -> (b g) c h w', g=self.n_groups, c=self.n_group_channels) 
 
         offset = self.conv_offset(q_off) # B * g 3 Hg Wg
         offset_1, offset_2, delta_m = offset.chunk(3, dim=1)
@@ -273,15 +272,13 @@ class DeformableAttention(nn.Module):
         out = self.proj_out(out)
         return out
 
-
+# Local Branch
 class MAB_Local(nn.Module):
     def __init__(self, n_channel, patch_size, n_heads, n_groups, activate):
         super(MAB_Local, self).__init__()
         self.patch_size = patch_size
-        # self.gmlp = Local_gMLP(num_channel, patch_size[0]*patch_size[1])
         self.deformable_attn = DeformableAttention(n_heads=n_heads, n_channel=n_channel, n_groups=n_groups, q_size=patch_size, kv_size=patch_size, activate=activate, phase="local")
     def forward(self, x):
-        # n, h, w, c = x.shape
         n, c, h, w = x.shape
         patch_h, patch_w = self.patch_size
         grid_h, grid_w = h // patch_h, w // patch_w
@@ -290,11 +287,11 @@ class MAB_Local(nn.Module):
         x = unblock_images_einops(x, grid_size=(grid_h, grid_w), patch_size=(patch_h, patch_w), phase="local")
         return x
 
+# Global Branch
 class MAB_Global(nn.Module):
     def __init__(self, n_channel, grid_size, n_heads, n_groups, activate):
         super(MAB_Global, self).__init__()
         self.grid_size = grid_size
-        # self.gmlp = Global_gMLP(num_channel, grid_size[0]*grid_size[1])
         self.deformable_attn = DeformableAttention(n_heads=n_heads, n_channel=n_channel, n_groups=n_groups, q_size=grid_size, kv_size=grid_size, activate=activate, phase="global")
 
     def forward(self, x): # n, c, h, w -> n, c, h, w 
@@ -306,12 +303,12 @@ class MAB_Global(nn.Module):
         x = unblock_images_einops(x, grid_size=(grid_h, grid_w), patch_size=(patch_h, patch_w), phase="global")
         return x
 
+# MAB
 class MAB(nn.Module):
     def __init__(self, num_channel, n_heads, n_groups, patch_size=[16,16], grid_size=[16,16], activate="gelu"):
         super(MAB, self).__init__()
         self.norm = LayerNorm(num_channel, 'BiasFree')
         self.conv1 = nn.Conv2d(in_channels=num_channel, out_channels=2*num_channel,kernel_size=1,stride=1,padding=0,bias=False)
-        # self.simple_gate = SimpleGate()
         if activate == "gelu":
             self.activate = nn.GELU()
         elif activate == "leakyrelu":
@@ -335,27 +332,22 @@ class MAB(nn.Module):
         x = self.conv2(x)
 
         return x + short_cut
-##########################################################################
+
+# DDTB
 class TransformerBlock(nn.Module):
     def __init__(self, dim, num_heads, num_groups, ffn_expansion_factor, bias, LayerNorm_type, patch_size, grid_size, activate):
         super(TransformerBlock, self).__init__()
         self.deformable_MAB = MAB(dim, num_heads, num_groups, patch_size, grid_size, activate)
-        # self.norm1 = LayerNorm(dim, LayerNorm_type)
-        # self.attn = Attention(dim, num_heads, bias)
         self.norm2 = LayerNorm(dim, LayerNorm_type)
         self.ffn = FeedForward(dim, ffn_expansion_factor, bias)
 
     def forward(self, x):
         x = self.deformable_MAB(x)
-        # x = x + self.attn(self.norm1(x))
         x = x + self.ffn(self.norm2(x))
 
         return x
 
 
-
-##########################################################################
-## Overlapped image patch embedding with 3x3 Conv
 class OverlapPatchEmbed(nn.Module):
     def __init__(self, in_c=3, embed_dim=48, bias=False):
         super(OverlapPatchEmbed, self).__init__()
@@ -367,10 +359,7 @@ class OverlapPatchEmbed(nn.Module):
 
         return x
 
-
-
-##########################################################################
-## Resizing modules
+# Downsample and Upsample
 class Downsample(nn.Module):
     def __init__(self, n_feat):
         super(Downsample, self).__init__()
