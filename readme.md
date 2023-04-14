@@ -84,11 +84,11 @@ The visualized outputs will be gererated in ```DDT/visualization```
 ## Citation
 If you are interested in this work, please consider citing:
 
-    @inproceedings{DDT,
-        title={DDT: Dual-branch Deformable Transformer for image denoising}, 
-        author={Liu, Kangliang and Du, Xiangcheng and Liu, Sijie and Zheng, Yingbin and Wu, Xingjiao and Jin, Cheng},
-        booktitle={IEEE International Conference on Multimedia and Expo (ICME)},
-        year={2023}
+    @article{liu23ddt,
+      title={DDT: Dual-branch Deformable Transformer for image denoising},
+      author={Liu, Kangliang and Du, Xiangcheng and Liu, Sijie and Zheng, Yingbin and Wu, Xingjiao and Jin, Cheng},
+      journal={arXiv preprint arXiv:2304.06346},
+      year={2023}
     }
 
 ## Acknowledgment
