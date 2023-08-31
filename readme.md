@@ -91,8 +91,6 @@ If you are interested in this work, please consider citing:
        booktitle={2023 IEEE International Conference on Multimedia and Expo (ICME)}, 
        title={DDT: Dual-branch Deformable Transformer for Image Denoising}, 
        year={2023},
-       volume={},
-       number={},
        pages={2765-2770},
        doi={10.1109/ICME55011.2023.00470}
       }
