@@ -4,7 +4,7 @@ Kangliang Liu, Xiangcheng Du, Sijie Liu, Yingbin Zheng, Xingjiao Wu, Cheng jin
 
 Fudan University, Videt Technology
 
-[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2304.06346)
+[[paper](https://ieeexplore.ieee.org/document/10220014)]
 
 ---
 
