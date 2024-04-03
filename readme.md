@@ -86,14 +86,14 @@ The visualized outputs will be gererated in ```DDT/visualization```
 ## Citation
 If you are interested in this work, please consider citing:
 
-    @inproceedings{10220014,
-       author={Liu, Kangliang and Du, Xiangcheng and Liu, Sijie and Zheng, Yingbin and Wu, Xingjiao and Jin, Cheng},
-       booktitle={2023 IEEE International Conference on Multimedia and Expo (ICME)}, 
-       title={DDT: Dual-branch Deformable Transformer for Image Denoising}, 
-       year={2023},
-       pages={2765-2770},
-       doi={10.1109/ICME55011.2023.00470}
-      }
+    @inproceedings{liu2023ddt,
+     title={DDT: Dual-branch deformable transformer for image denoising},
+     author={Liu, Kangliang and Du, Xiangcheng and Liu, Sijie and Zheng, Yingbin and Wu, Xingjiao and Jin, Cheng},
+     booktitle={2023 IEEE International Conference on Multimedia and Expo (ICME)},
+     pages={2765--2770},
+     year={2023},
+     organization={IEEE}
+   }
   
 ## Acknowledgment
 This code is based on the [BasicSR](https://github.com/XPixelGroup/BasicSR) and  [Restormer](https://github.com/swz30/Restormer). Thanks for their awesome works.
