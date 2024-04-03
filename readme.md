@@ -93,7 +93,7 @@ If you are interested in this work, please consider citing:
      pages={2765--2770},
      year={2023},
      organization={IEEE}
-   }
+    }
   
 ## Acknowledgment
 This code is based on the [BasicSR](https://github.com/XPixelGroup/BasicSR) and  [Restormer](https://github.com/swz30/Restormer). Thanks for their awesome works.
